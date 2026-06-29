@@ -40,11 +40,14 @@ export function FacultyLayout({ user, onLogout }: { user: any; onLogout: () => v
 
   useEffect(() => {
     if (!user?.email) return;
-    let unsubscribe: () => void;
+    let active = true;
+    let unsubscribe: (() => void) | undefined;
 
     async function setupFeedbackListener() {
       const q = query(collection(db, "projects"), where("facultyId", "==", user.email));
       const snap = await getDocs(q);
+      if (!active) return;
+      
       const projectIds = snap.docs.map(d => d.id);
       
       if (projectIds.length > 0) {
@@ -52,6 +55,7 @@ export function FacultyLayout({ user, onLogout }: { user: any; onLogout: () => v
         const chunk = projectIds.slice(0, 10);
         const fQ = query(collection(db, "feedback"), where("projectId", "in", chunk), where("status", "==", "Open"));
         unsubscribe = onSnapshot(fQ, (fSnap) => {
+          if (!active) return;
           const docs = fSnap.docs.map(d => d.data());
           // If the user is the faculty, they want to see messages unread by them.
           const unreadCount = docs.filter(d => !d.readBy?.includes(user.email)).length;
@@ -62,6 +66,7 @@ export function FacultyLayout({ user, onLogout }: { user: any; onLogout: () => v
     setupFeedbackListener();
 
     return () => {
+      active = false;
       if (unsubscribe) unsubscribe();
     };
   }, [user]);

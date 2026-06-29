@@ -13,10 +13,10 @@ export function LoginScreen({ onLogin }: { onLogin: (user: any) => void }) {
   const [loading, setLoading] = useState(false);
 
   const DEMO_ACCOUNTS = [
-    { username: "student", password: "student@12345", label: "Student",   color: "#4f46e5" },
-    { username: "hod",     password: "hod@12345",     label: "HOD",       color: "#0891b2" },
-    { username: "faculty", password: "faculty@12345", label: "Faculty",   color: "#7c3aed" },
-    { username: "admin",   password: "admin@12345",   label: "Admin",     color: "#dc2626" },
+    { username: "student", password: "student", label: "Student",   color: "#4f46e5" },
+    { username: "hod",     password: "hod12345",     label: "HOD",       color: "#0891b2" },
+    { username: "faculty", password: "faculty",       label: "Faculty",   color: "#7c3aed" },
+    { username: "admin",   password: "admin12345",   label: "Admin",     color: "#dc2626" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

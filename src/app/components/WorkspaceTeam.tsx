@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, collection, query, where, onSnapshot, addDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, collection, query, where, onSnapshot, addDoc, serverTimestamp, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Users, UserPlus, Shield, X, Award, Clock } from "lucide-react";
 
@@ -8,6 +8,7 @@ export function WorkspaceTeam({ projectId, user, role = "student" }: { projectId
   const [newEmail, setNewEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [invitations, setInvitations] = useState<any[]>([]);
+  const [contributions, setContributions] = useState<Record<string, number>>({});
 
   useEffect(() => {
     fetchProject();
@@ -16,6 +17,25 @@ export function WorkspaceTeam({ projectId, user, role = "student" }: { projectId
     const unsub = onSnapshot(q, (snap) => {
       setInvitations(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     });
+
+    const fetchContributions = async () => {
+      try {
+        const uQ = query(collection(db, "updates"), where("projectId", "==", projectId));
+        const uSnap = await getDocs(uQ);
+        const updates = uSnap.docs.map(d => d.data());
+        
+        const counts: Record<string, number> = {};
+        updates.forEach(u => {
+          const email = u.author || u.userEmail;
+          if (email) counts[email] = (counts[email] || 0) + 1;
+        });
+        setContributions(counts);
+      } catch (err) {
+        console.error("Error fetching contributions:", err);
+      }
+    };
+    fetchContributions();
+
     return unsub;
   }, [projectId]);
 
@@ -147,7 +167,14 @@ export function WorkspaceTeam({ projectId, user, role = "student" }: { projectId
               
               <div className="flex items-center justify-between text-xs border-t border-slate-50 pt-3 mt-auto">
                 <div className="flex items-center gap-1.5 text-slate-500">
-                  <Award size={14} className="text-emerald-500"/> Contribution: <span className="font-bold text-slate-700">{Math.floor(Math.random() * 40) + 10}%</span>
+                  <Award size={14} className="text-emerald-500"/> Contribution: <span className="font-bold text-slate-700">
+                    {(() => {
+                      const totalUpdates = Object.values(contributions).reduce((a, b) => a + b, 0);
+                      if (totalUpdates === 0) return Math.round(100 / project.team.length) + "%";
+                      const memberUpdates = contributions[email] || 0;
+                      return Math.round((memberUpdates / totalUpdates) * 100) + "%";
+                    })()}
+                  </span>
                 </div>
               </div>
 

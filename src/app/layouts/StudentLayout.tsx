@@ -19,6 +19,7 @@ import { StudentFeedback } from "../pages/student/StudentFeedback";
 import { StudentAnalytics } from "../pages/student/StudentAnalytics";
 import { StudentAchievements } from "../pages/student/StudentAchievements";
 import { StudentCreateProject } from "../pages/student/StudentCreateProject";
+import { StudentDemoCenter } from "../pages/student/StudentDemoCenter";
 
 export function StudentLayout({ user, onLogout }: { user: any; onLogout: () => void }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,11 +28,14 @@ export function StudentLayout({ user, onLogout }: { user: any; onLogout: () => v
 
   React.useEffect(() => {
     if (!user?.email) return;
-    let unsubscribe: () => void;
+    let active = true;
+    let unsubscribe: (() => void) | undefined;
 
     async function setupFeedbackListener() {
       const q = query(collection(db, "projects"), where("team", "array-contains", user.email));
       const snap = await getDocs(q);
+      if (!active) return;
+      
       const projectIds = snap.docs.map(d => d.id);
       
       if (projectIds.length > 0) {
@@ -40,6 +44,7 @@ export function StudentLayout({ user, onLogout }: { user: any; onLogout: () => v
         const chunk = projectIds.slice(0, 10);
         const fQ = query(collection(db, "feedback"), where("projectId", "in", chunk), where("status", "==", "Open"));
         unsubscribe = onSnapshot(fQ, (fSnap) => {
+          if (!active) return;
           const docs = fSnap.docs.map(d => d.data());
           const unreadCount = docs.filter(d => !d.readBy?.includes(user.email)).length;
           setFeedbackCount(unreadCount);
@@ -49,6 +54,7 @@ export function StudentLayout({ user, onLogout }: { user: any; onLogout: () => v
     setupFeedbackListener();
 
     return () => {
+      active = false;
       if (unsubscribe) unsubscribe();
     };
   }, [user]);
@@ -81,15 +87,16 @@ export function StudentLayout({ user, onLogout }: { user: any; onLogout: () => v
         <main className="flex-1 overflow-y-auto p-5 lg:p-6">
           <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" /></div>}>
             <Routes>
-              <Route path="/student" element={<StudentDashboardHome />} />
+              <Route path="/student" element={<StudentDashboardHome user={user} />} />
               <Route path="/student/projects" element={<StudentMyProjects user={user} />} />
               <Route path="/student/workspace/:projectId" element={<ProjectWorkspace user={user} />} />
               <Route path="/student/team" element={<StudentTeam user={user} />} />
               <Route path="/student/updates" element={<StudentUpdates user={user} />} />
               <Route path="/student/files" element={<StudentFiles user={user} />} />
               <Route path="/student/feedback" element={<StudentFeedback user={user} />} />
-              <Route path="/student/analytics" element={<StudentAnalytics />} />
-              <Route path="/student/achievements" element={<StudentAchievements />} />
+              <Route path="/student/analytics" element={<StudentAnalytics user={user} />} />
+              <Route path="/student/achievements" element={<StudentAchievements user={user} />} />
+              <Route path="/student/demo" element={<StudentDemoCenter user={user} />} />
               <Route path="/student/profile" element={<GenericProfile user={user} />} />
               <Route path="/student/create" element={<StudentCreateProject user={user} />} />
               <Route path="*" element={<Navigate to="/student" replace />} />
