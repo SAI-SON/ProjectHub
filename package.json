@@ -1,5 +1,6 @@
 {
-  "name": "@figma/my-make-file",
+  "name": "projecthub",
+  "description": "Smart academic project management platform",
   "private": true,
   "version": "0.0.1",
   "type": "module",

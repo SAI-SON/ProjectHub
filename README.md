@@ -1,7 +1,7 @@
 
-  # Create User-Friendly Design
+  # ProjectHub
 
-  This is a code bundle for Create User-Friendly Design. The original project is available at https://www.figma.com/design/o6AMKssRu0kkqHGFsxaf5s/Create-User-Friendly-Design.
+  ProjectHub is a smart academic project management platform for students, faculty, HODs, and administrators to collaborate, track progress, manage milestones, and oversee university projects — all in one place.
 
   ## Running the code
 
