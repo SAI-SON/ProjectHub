@@ -122,16 +122,18 @@ export function AdminAllProjects() {
         </html>
       `;
 
-      // Create data URI with UTF-8 BOM to ensure MS Word parses characters correctly
-      const encodedUri = "data:application/msword;charset=utf-8,\ufeff" + encodeURIComponent(htmlContent);
+      // Create a Blob with UTF-8 BOM to ensure MS Word parses characters correctly and avoid data URI limits
+      const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
       
       const link = document.createElement("a");
-      link.href = encodedUri;
+      link.href = url;
       link.download = "Project_Repository_Export.doc";
       document.body.appendChild(link);
       link.click();
       
       document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 100);
     } catch (err) {
       console.error("Word export failed:", err);
       alert("Failed to export Word file.");
