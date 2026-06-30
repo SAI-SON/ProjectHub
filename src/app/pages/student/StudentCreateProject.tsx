@@ -54,6 +54,17 @@ export function StudentCreateProject({ user }: { user: any }) {
         color: "#4f46e5",
         createdAt: serverTimestamp()
       });
+
+      // Write notification for the faculty guide
+      await addDoc(collection(db, "notifications"), {
+        userId: facultyEmail,
+        title: "New Project Proposal",
+        message: `A new project proposal "${title}" has been submitted for your approval by ${user.name || user.email}.`,
+        read: false,
+        type: "proposal",
+        createdAt: serverTimestamp()
+      });
+
       alert("Proposal Submitted successfully! It is now pending Faculty Approval.");
       navigate("/student/projects");
     } catch (err) {

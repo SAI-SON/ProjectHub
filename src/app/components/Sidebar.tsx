@@ -38,7 +38,7 @@ export function Sidebar({ nav, onLogout, open, onClose, role, user }: {
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-0.5">
+        <nav className="flex-1 overflow-y-auto scrollbar-hide px-3 py-2 space-y-0.5">
           {nav.map((item) => {
             const path = item.path || `/${role}/${item.id === "home" ? "" : item.id}`;
             const active = location.pathname === path || (item.id !== "home" && location.pathname.startsWith(path));

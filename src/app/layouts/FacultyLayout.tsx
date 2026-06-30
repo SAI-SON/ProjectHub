@@ -94,7 +94,7 @@ export function FacultyLayout({ user, onLogout }: { user: any; onLogout: () => v
         <main className="flex-1 overflow-y-auto p-5 lg:p-6">
           <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" /></div>}>
             <Routes>
-              <Route path="/faculty" element={<FacultyDashboardHome />} />
+              <Route path="/faculty" element={<FacultyDashboardHome user={user} />} />
               <Route path="/faculty/approvals" element={<FacultyApprovals user={user} />} />
               <Route path="/faculty/assigned" element={<FacultyAssignedProjects user={user} />} />
               <Route path="/faculty/workspace/:projectId" element={<FacultyProjectWorkspace user={user} />} />

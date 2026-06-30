@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, query, where, onSnapshot, addDoc, updateDoc, doc, serverTimestamp, arrayUnion } from "firebase/firestore";
+import { collection, query, where, onSnapshot, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { MessageSquare, Send, CheckCircle, RotateCcw } from "lucide-react";
 
@@ -43,16 +43,54 @@ export function WorkspaceFeedback({ projectId, user, role = "student" }: { proje
     e.preventDefault();
     if (!newFeedback.trim()) return;
     
+    const feedbackText = newFeedback;
+    setNewFeedback("");
+
+    // Add feedback document
     await addDoc(collection(db, "feedback"), {
       projectId,
-      text: newFeedback,
+      text: feedbackText,
       status: "Open",
       author: user.name,
       role: role,
       createdAt: serverTimestamp(),
-      readBy: [user.email] // The author has read their own message
+      readBy: [user.email]
     });
-    setNewFeedback("");
+
+    // Write notifications for the appropriate recipient
+    try {
+      const projSnap = await getDoc(doc(db, "projects", projectId));
+      if (projSnap.exists()) {
+        const proj = projSnap.data();
+        if (role === "student" && proj.facultyId) {
+          // Notify faculty
+          await addDoc(collection(db, "notifications"), {
+            userId: proj.facultyId,
+            title: "New Feedback on Project",
+            message: `A team member of "${proj.name}" posted new feedback: "${feedbackText.substring(0, 50)}..."`,
+            read: false,
+            type: "feedback",
+            projectId: projectId,
+            createdAt: serverTimestamp()
+          });
+        } else if (role === "faculty" && proj.team) {
+          // Notify all team members
+          for (const email of proj.team) {
+            await addDoc(collection(db, "notifications"), {
+              userId: email,
+              title: "New Faculty Guidance",
+              message: `${user.name} posted new guidance on your project "${proj.name}": "${feedbackText.substring(0, 50)}..."`,
+              read: false,
+              type: "feedback",
+              projectId: projectId,
+              createdAt: serverTimestamp()
+            });
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Failed to send notification for feedback:", err);
+    }
   };
 
   const toggleStatus = async (id: string, currentStatus: string) => {

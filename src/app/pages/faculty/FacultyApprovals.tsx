@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ClipboardList, FileText, ThumbsUp, ThumbsDown } from "lucide-react";
-import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { Card } from "../../components/ui/Card";
 import { StatusBadge } from "../../components/ui/StatusBadge";
@@ -25,11 +25,29 @@ export function FacultyApprovals({ user }: { user: any }) {
 
   const decide = async (id: string, decision: "Approved" | "Rejected") => {
     try {
+      const proj = projects.find(p => p.id === id);
+
       await updateDoc(doc(db, "projects", id), {
         status: decision === "Approved" ? "In Progress" : "Rejected",
         milestone: decision === "Approved" ? "Requirement Analysis" : "Proposal Rejected",
         progress: decision === "Approved" ? 10 : 0
       });
+
+      // Write notification for student team members
+      if (proj && proj.team) {
+        for (const email of proj.team) {
+          await addDoc(collection(db, "notifications"), {
+            userId: email,
+            title: decision === "Approved" ? "Proposal Approved" : "Proposal Rejected",
+            message: `Your project proposal "${proj.name}" has been ${decision === "Approved" ? "approved" : "rejected"} by ${user.name || user.email}.`,
+            read: false,
+            type: "proposal",
+            projectId: id,
+            createdAt: serverTimestamp()
+          });
+        }
+      }
+
       setProjects(prev => prev.filter(p => p.id !== id));
     } catch (err) {
       console.error(err);
