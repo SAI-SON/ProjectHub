@@ -3,11 +3,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, LayoutDashboard, Users, CheckSquare, Flag, Bell, Folder, MessageSquare, Video } from "lucide-react";
-import { WorkspaceUpdates } from "../../components/WorkspaceUpdates";
-import { WorkspaceTeam } from "../../components/WorkspaceTeam";
-import { WorkspaceTasks } from "../../components/WorkspaceTasks";
-import { WorkspaceFiles } from "../../components/WorkspaceFiles";
-import { WorkspaceFeedback } from "../../components/WorkspaceFeedback";
+import { WorkspaceUpdates } from "../../components/workspace/WorkspaceUpdates";
+import { WorkspaceTeam } from "../../components/workspace/WorkspaceTeam";
+import { WorkspaceTasks } from "../../components/workspace/WorkspaceTasks";
+import { WorkspaceFiles } from "../../components/workspace/WorkspaceFiles";
+import { WorkspaceFeedback } from "../../components/workspace/WorkspaceFeedback";
 
 // Since we don't have all the specific student tabs, we render placeholders or skip them
 export function ProjectWorkspace({ user }: { user: any }) {

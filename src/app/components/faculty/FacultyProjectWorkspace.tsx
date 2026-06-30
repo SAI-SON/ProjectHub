@@ -3,11 +3,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, LayoutDashboard, Users, CheckSquare, Flag, Bell, Folder, MessageSquare, Video, Star, Clock } from "lucide-react";
-import { WorkspaceUpdates } from "../WorkspaceUpdates";
-import { WorkspaceTeam } from "../WorkspaceTeam";
-import { WorkspaceTasks } from "../WorkspaceTasks";
-import { WorkspaceFiles } from "../WorkspaceFiles";
-import { WorkspaceFeedback } from "../WorkspaceFeedback";
+import { WorkspaceUpdates } from "../workspace/WorkspaceUpdates";
+import { WorkspaceTeam } from "../workspace/WorkspaceTeam";
+import { WorkspaceTasks } from "../workspace/WorkspaceTasks";
+import { WorkspaceFiles } from "../workspace/WorkspaceFiles";
+import { WorkspaceFeedback } from "../workspace/WorkspaceFeedback";
 
 // We will build these Faculty-specific tabs in the next step
 import { FacultyOverviewTab } from "./tabs/FacultyOverviewTab";

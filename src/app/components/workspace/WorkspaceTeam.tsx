@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, collection, query, where, onSnapshot, addDoc, serverTimestamp, deleteDoc, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { Users, UserPlus, Shield, X, Award, Clock } from "lucide-react";
 
 export function WorkspaceTeam({ projectId, user, role = "student" }: { projectId: string; user: any; role?: "student" | "faculty" }) {

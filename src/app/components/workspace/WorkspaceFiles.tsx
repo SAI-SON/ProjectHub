@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { collection, query, where, onSnapshot, addDoc, serverTimestamp, doc, updateDoc, deleteDoc, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { 
   Folder, FileText, UploadCloud, File, Image as ImageIcon, Video, FileArchive, 
   Download, Eye, Trash2, Clock, MessageSquare, MoreVertical, Search, X, CheckCircle,

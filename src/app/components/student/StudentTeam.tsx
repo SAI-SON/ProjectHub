@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, getDocs, doc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
-import { WorkspaceTeam } from "./WorkspaceTeam";
+import { db } from "../../../firebase";
+import { WorkspaceTeam } from "../workspace/WorkspaceTeam";
 import { Users, Mail, Check, X } from "lucide-react";
 
 export function StudentTeam({ user }: { user: any }) {

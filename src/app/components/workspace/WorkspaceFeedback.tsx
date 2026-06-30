@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, onSnapshot, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { MessageSquare, Send, CheckCircle, RotateCcw } from "lucide-react";
 
 export function WorkspaceFeedback({ projectId, user, role = "student" }: { projectId: string; user: any; role?: "student" | "faculty" }) {

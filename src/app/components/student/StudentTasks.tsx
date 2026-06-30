@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import { WorkspaceTasks } from "./WorkspaceTasks";
+import { db } from "../../../firebase";
+import { WorkspaceTasks } from "../workspace/WorkspaceTasks";
 import { CheckSquare, GitBranch } from "lucide-react";
 
 export function StudentTasks({ user }: { user: any }) {

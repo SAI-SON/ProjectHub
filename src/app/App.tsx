@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
 
-import { LoginScreen } from "./components/LoginScreen";
+import { LoginScreen } from "./components/auth/LoginScreen";
 import { StudentLayout } from "./layouts/StudentLayout";
 import { HodLayout } from "./layouts/HodLayout";
 import { FacultyLayout } from "./layouts/FacultyLayout";

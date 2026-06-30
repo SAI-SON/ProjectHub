@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, Search, Bell, MessageSquare, FileText, CheckCircle, AlertCircle, Check, Trash2 } from "lucide-react";
-import { Avatar } from "./ui/Avatar";
-import { db } from "../../firebase";
+import { Avatar } from "../ui/Avatar";
+import { db } from "../../../firebase";
 import { collection, query, where, onSnapshot, getDocs, doc, updateDoc, deleteDoc, addDoc, serverTimestamp } from "firebase/firestore";
 
 export function Header({ title, onMenuClick, user }: { title: string; onMenuClick: () => void; user: any }) {

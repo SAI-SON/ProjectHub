@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router";
 import { Home, FolderOpen, Plus, Users, Upload, Paperclip, MessageSquare, Video, BarChart2, Trophy, User } from "lucide-react";
 
-import { Sidebar } from "../components/Sidebar";
-import { Header } from "../components/Header";
-import { GenericProfile } from "../components/GenericProfile";
+import { Sidebar } from "../components/layout/Sidebar";
+import { Header } from "../components/layout/Header";
+import { GenericProfile } from "../components/profile/GenericProfile";
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -12,9 +12,9 @@ import { db } from "../../firebase";
 import { StudentDashboardHome } from "../pages/student/StudentDashboardHome";
 import { StudentMyProjects } from "../pages/student/StudentMyProjects";
 import { ProjectWorkspace } from "../pages/student/ProjectWorkspace";
-import { StudentTeam } from "../components/StudentTeam";
-import { StudentUpdates } from "../components/StudentUpdates";
-import { StudentFiles } from "../components/StudentFiles";
+import { StudentTeam } from "../components/student/StudentTeam";
+import { StudentUpdates } from "../components/student/StudentUpdates";
+import { StudentFiles } from "../components/student/StudentFiles";
 import { StudentFeedback } from "../pages/student/StudentFeedback";
 import { StudentAnalytics } from "../pages/student/StudentAnalytics";
 import { StudentAchievements } from "../pages/student/StudentAchievements";

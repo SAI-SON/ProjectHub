@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "./ui/Card";
-import { Avatar } from "./ui/Avatar";
-import { SectionTitle } from "./ui/SectionTitle";
-import { auth, db } from "../../firebase";
+import { Card } from "../ui/Card";
+import { Avatar } from "../ui/Avatar";
+import { SectionTitle } from "../ui/SectionTitle";
+import { auth, db } from "../../../firebase";
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import { collection, query, where, getDocs, getDoc, doc, updateDoc } from "firebase/firestore";
 

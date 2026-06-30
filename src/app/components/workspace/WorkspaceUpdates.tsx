@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, onSnapshot, addDoc, serverTimestamp, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { Plus, GitCommit } from "lucide-react";
 
 export function WorkspaceUpdates({ projectId, user, role = "student" }: { projectId: string; user: any; role?: "student" | "faculty" }) {

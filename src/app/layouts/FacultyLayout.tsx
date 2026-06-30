@@ -4,9 +4,9 @@ import { Home, ClipboardList, FolderOpen, TrendingUp, MessageSquare, CheckSquare
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 
-import { Sidebar } from "../components/Sidebar";
-import { Header } from "../components/Header";
-import { GenericProfile } from "../components/GenericProfile";
+import { Sidebar } from "../components/layout/Sidebar";
+import { Header } from "../components/layout/Header";
+import { GenericProfile } from "../components/profile/GenericProfile";
 
 // Lazy Loaded Pages
 import { FacultyDashboardHome } from "../pages/faculty/FacultyDashboardHome";

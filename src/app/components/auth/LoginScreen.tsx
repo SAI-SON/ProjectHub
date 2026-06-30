@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { GraduationCap, AtSign, Lock, Eye, EyeOff, AlertTriangle } from "lucide-react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
-import { auth, db } from "../../firebase";
-import { Role } from "../types";
+import { auth, db } from "../../../firebase";
+import { Role } from "../../types";
 
 export function LoginScreen({ onLogin }: { onLogin: (user: any) => void }) {
   const [username, setUsername] = useState("");

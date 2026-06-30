@@ -1,8 +1,8 @@
 import React from "react";
 import { GraduationCap, LogOut, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
-import { Role } from "../types";
-import { Avatar } from "./ui/Avatar";
+import { Role } from "../../types";
+import { Avatar } from "../ui/Avatar";
 
 export function Sidebar({ nav, onLogout, open, onClose, role, user }: {
   nav: { id: string; label: string; icon: React.ReactNode; badge?: string; path?: string }[];

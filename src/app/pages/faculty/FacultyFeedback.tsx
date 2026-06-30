@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { WorkspaceFeedback } from "../../components/WorkspaceFeedback";
+import { WorkspaceFeedback } from "../../components/workspace/WorkspaceFeedback";
 import { MessageSquare } from "lucide-react";
 
 export function FacultyFeedback({ user }: { user: any }) {

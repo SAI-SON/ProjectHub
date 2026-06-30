@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router";
 import { Home, FolderOpen, UserCheck, BarChart2, ClipboardList, Trophy, BookOpen, Megaphone, User } from "lucide-react";
 
-import { Sidebar } from "../components/Sidebar";
-import { Header } from "../components/Header";
-import { GenericProfile } from "../components/GenericProfile";
+import { Sidebar } from "../components/layout/Sidebar";
+import { Header } from "../components/layout/Header";
+import { GenericProfile } from "../components/profile/GenericProfile";
 
 // Lazy Loaded Pages
 import { HodDashboardHome } from "../pages/hod/HodDashboardHome";
